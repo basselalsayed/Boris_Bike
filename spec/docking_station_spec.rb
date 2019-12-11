@@ -15,8 +15,16 @@ describe DockingStation do
     it { expect(Bike.new.working?).to equal(true) }
   end
 
-  describe '.dock' do
+  describe 'dock' do
     it { expect(station.dock(Bike.new())).to be_a(Bike) }
+  end
+
+  describe "#dock" do
+    it "raises error when no space" do
+      bike = Bike.new
+      subject.dock(bike)
+      expect{subject.dock(Bike.new)}.to raise_error "No space" 
+    end
   end
 
   describe '#release_bike' do
