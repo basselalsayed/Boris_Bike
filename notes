@@ -1,4 +1,5 @@
 OBJECTS	                  MESSAGES
+
 Person	
 Bike	
 Docking station	          release bike
@@ -15,6 +16,9 @@ good bike <——————————-----|
 
 bike <— working? —> true/false
 DockingStation < — release_bike —> a bike
+
+person  -- > bike ---> docking station 
+
 
 type of error - NameError: Uninitialized Constant
 file path - /Users/username/.rbenv/versions/2.6.3/bin/irb
