@@ -2,7 +2,7 @@ require "docking_station"
 require 'rspec/expectations'
 
 describe DockingStation do
-  let(:station) {DockingStation.new}
+  # let(:station) {DockingStation.new}
 
   it { is_expected.to respond_to :release_bike }
 
@@ -11,12 +11,12 @@ describe DockingStation do
   #  expect(bike).to be_working
   # end
 
-  describe '.working?' do
+  describe '#working?' do
     it { expect(Bike.new.working?).to equal(true) }
   end
 
-  describe 'dock' do
-    it { expect(station.dock(Bike.new())).to be_a(Array) }
+  describe '#dock' do
+    it { expect(subject.dock(Bike.new())).to be_a(Array) }
   end
 
   # describe "#dock" do
@@ -35,22 +35,24 @@ describe DockingStation do
     end
   end
 
-  describe 'release bike when no bikes' do
-    it { expect { station.release_bike }.to raise_error 'No bikes available' }
+  describe 'release bike when station is empty' do
+    it { expect { subject.release_bike }.to raise_error 'No bikes available' }
   end
   
   describe '#dock' do
     it 'attempts to dock 21st bike' do
       DockingStation::DEFAULT_CAPACITY.times { subject.dock(Bike.new) }
-      expect { subject.dock(Bike.new)}.to raise_error 'No space'
+      expect { subject.dock(Bike.new)}.to raise_error 'No Space'
   end
 end
 
 describe '#initialize' do
-  it 'attempts to set a docking limit' do
-    DockingStation.new(30)
-    expect (@capacity).to equal(30)
+  it 'is able to set a variable bike capacity' do
+    station = DockingStation.new(50)
+    50.times { station.dock(Bike.new)}
+    expect {station.dock(Bike.new) }.to raise_error 'No Space'
   end
 end
+
 
 end
