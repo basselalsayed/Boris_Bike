@@ -13,7 +13,9 @@ class DockingStation
 
   def release_bike
     raise 'No bikes available' if @bikes if empty?
-    @bikes.pop
+    raise 'No working bikes available' if @bikes.select {|bike| !bike.broken? }.empty?
+    @bikes.select {|bike| bike if !bike.broken? }.pop
+
   end
 
   def dock(bike)
@@ -30,5 +32,7 @@ class DockingStation
   def empty?
     @bikes.empty?
   end
+
+
 
 end
