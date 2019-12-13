@@ -10,5 +10,4 @@ class Bike
     @broken
   end
 
-
 end

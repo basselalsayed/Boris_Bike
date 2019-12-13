@@ -2,7 +2,8 @@ require "docking_station"
 require 'rspec/expectations'
 
 describe DockingStation do
-  # let(:station) {DockingStation.new}
+  let(:bike) {double( :broken? => true)}
+  let(:bike2) {double(:report_broken => false, :broken? => false)}
 
   it { is_expected.to respond_to :release_bike }
 
@@ -12,9 +13,8 @@ describe DockingStation do
 
   describe '#release_bike' do
     it 'releases a bike' do
-      bike = Bike.new
-      subject.dock(bike)
-      expect(subject.release_bike).to eq bike
+      subject.dock(bike2)
+      expect(subject.release_bike).to eq bike2
     end
   end
 
@@ -24,36 +24,40 @@ describe DockingStation do
   
   describe '#dock' do
     it 'attempts to dock when station is full' do
-      DockingStation::DEFAULT_CAPACITY.times { subject.dock(Bike.new) }
-      expect { subject.dock(Bike.new)}.to raise_error 'No Space'
+      DockingStation::DEFAULT_CAPACITY.times { subject.dock(bike) }
+      expect { subject.dock(bike)}.to raise_error 'No Space'
   end
 end
 
   describe '#initialize' do
     it 'is able to set a variable bike capacity' do
       station = DockingStation.new(50)
-      50.times { station.dock(Bike.new)}
-      expect {station.dock(Bike.new) }.to raise_error 'No Space'
+      50.times { station.dock(bike)}
+      expect {station.dock(bike) }.to raise_error 'No Space'
     end
   end
 
   describe '#broken' do
     it 'is able to store a broken bike' do
-      bike = Bike.new
-      bike.report_broken
       subject.dock(bike) 
       expect(subject.bikes).to include(bike)
     end
   end
 
   describe '#release_bike' do
-
-    it 'raises an error when no working bikes are available' do
-      bike = Bike.new
-      bike.report_broken
-      subject.dock(bike) 
+    it 'raises an error when no working bikes are available' do 
+      subject.dock(bike)
       expect{subject.release_bike}.to raise_error 'No working bikes available'
     end
   end
 
+  describe '#broken_to_load' do
+    it 'delivers broken bikes to a van' do
+    subject.dock(bike)
+    subject.dock(bike2)
+    p subject.bikes
+    subject.broken_to_load
+    expect(subject.bikes).to eq [bike2]
+  end
+end
 end

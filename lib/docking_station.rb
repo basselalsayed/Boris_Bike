@@ -1,4 +1,6 @@
-require_relative "bike"
+require_relative 'bike'
+require_relative 'van'
+
 
 class DockingStation
   attr_reader :bikes 
@@ -14,14 +16,22 @@ class DockingStation
   def release_bike
     raise 'No bikes available' if @bikes if empty?
     raise 'No working bikes available' if @bikes.select {|bike| !bike.broken? }.empty?
-    @bikes.select {|bike| bike if !bike.broken? }.pop
-
+    working_bikes_array.pop
   end
 
   def dock(bike)
     raise "No Space" if @bikes if full?
     @bikes << bike
   end
+
+  
+
+  def broken_to_load
+    broken = broken_bikes_array
+    @bikes -= broken_bikes_array
+    broken
+  end
+
 
   private 
 
@@ -33,6 +43,12 @@ class DockingStation
     @bikes.empty?
   end
 
+  def broken_bikes_array
+    @bikes.select {|bike| bike if bike.broken? }
+  end
 
+  def working_bikes_array
+    @bikes.reject {|bike| bike if bike.broken? }
+  end
 
 end
