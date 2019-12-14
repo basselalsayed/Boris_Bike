@@ -18,5 +18,5 @@ attr_reader :broken_bikes
     @broken_bikes = []
   end
 
-  
+
 end

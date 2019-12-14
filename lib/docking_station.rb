@@ -3,7 +3,7 @@ require_relative 'van'
 
 
 class DockingStation
-  attr_reader :bikes 
+  attr_reader :bikes
   attr_accessor :capacity
 
   DEFAULT_CAPACITY = 20
@@ -24,7 +24,7 @@ class DockingStation
     @bikes << bike
   end
 
-  
+
 
   def broken_to_load
     broken = broken_bikes_array
@@ -33,10 +33,10 @@ class DockingStation
   end
 
 
-  private 
+  private
 
   def full?
-    @bikes.length >= @capacity 
+    @bikes.length >= @capacity
   end
 
   def empty?

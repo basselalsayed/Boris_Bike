@@ -4,10 +4,10 @@ require 'van'
 
 class Garage
 
-  attr_accessor :bikes_to_fix
-  
+  attr_accessor :bike_deliveries
+
 def initialize
-  @bikes_to_fix = []
+  @bike_deliveries = []
 end
 
 

@@ -18,24 +18,24 @@ describe Van do
       station.dock(bike)
       expect(subject.pick_up_broken(station)).to eq ([bike])
     end
-  
+
     it 'delivers broken bikes to a given garage' do
-      garage = []
-      expect(subject.delivers_broken(garage)).to eq []
+
+      station = DockingStation.new
+      garage = Garage.new
+      bike = Bike.new
+      bike.report_broken
+      station.dock(bike)
+      subject.pick_up_broken(station)
+      expect(subject.delivers_broken(garage)).to eq subject.broken_bikes
+      expect(garage.bike_deliveries) .to eq [bike]
     end
 
   end
 
-  
+
 
 
 
 
 end
-
-
-
-
-
-
-
